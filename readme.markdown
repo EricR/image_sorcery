@@ -9,7 +9,7 @@ Image Sorcery allows you to leverage all three of ImageMagick's command line too
 image = Sorcery.new("image.png")
 image.identify # => "image.png PNG 500x500 500x500+0+0 8-bit DirectClass 236KB 0.010u 0:00.010\n"
 image.manipulate!(scale: "50%") # => true
-image.dimensions #=> { x: 250, y: 250 }
+image.dimensions # => { x: 250, y: 250 }
 image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 ```
 
