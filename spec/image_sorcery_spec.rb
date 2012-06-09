@@ -3,12 +3,12 @@ require 'image_sorcery'
 
 describe "Image Sorcery" do
   before :each do
-    FileUtils.copy "./spec/fixtures/dog.jpeg", "./spec/fixtures/dog-2.jpeg" # Who doesn't love dogs?
-    @image = Sorcery.new("./spec/fixtures/dog-2.jpeg")
+    FileUtils.copy "./spec/fixtures/dog.jpeg", "./spec/fixtures/dog-2.jpeg" 
+    @image = Sorcery.new("./spec/fixtures/dog-2.jpeg") # Who doesn't love dogs?
   end
   describe "getting the dimensions of an image" do
     it "returns a hash of dimensions" do
-      @image.dimensions.should == {x: "1280", y: "960"}
+      @image.dimensions.should == {x: "160", y: "120"}
     end
   end
   describe "manipulating an image" do
@@ -26,7 +26,7 @@ describe "Image Sorcery" do
   end
   describe "identifying an image" do
     it "returns a list of layers" do
-      @image.identify.should include "JPEG 1280x960"
+      @image.identify.should include "JPEG 160x120"
     end
   end
 end
