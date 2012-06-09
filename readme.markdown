@@ -2,7 +2,7 @@ Image Sorcery allows you to leverage all three of ImageMagick's command line too
 
 ## Why?
 
-At [Fol.io](http://fol.io), we need server-side image processing to work well and bend to our will. I wrote this because most of the ImageMagick libraries out there for Ruby suffer from at least one of two problems:
+At [Fol.io](http://fol.io), we need server-side image processing to work well and bend to our will. I wrote this because the ImageMagick libraries we tried suffered from at least one of two problems:
 
 * Large memory consumption/leaking
 * Doesn't expose the entire ImageMagick library
