@@ -1,3 +1,5 @@
+require 'subexec'
+
 class Sorcery
   def initialize(file)
     @file = file
