@@ -21,3 +21,8 @@ image.manipulate!(scale: "50%") # => true
 image.dimensions # => { x: 250, y: 250 }
 image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 ```
+
+## Todo
+
+* More unit tests
+* A few more convenience methods (like "dimensions").
