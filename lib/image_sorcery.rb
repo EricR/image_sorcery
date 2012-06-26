@@ -45,7 +45,7 @@ class Sorcery
   # Return the x and y dimensions of an image as a hash.
   #
   def dimensions
-    dimensions = identify(layer: 0, format: "%wx%h").chomp.split("x")
+    dimensions = identify(:layer => 0, :format => "%wx%h").chomp.split("x")
     { x: dimensions[0],
       y: dimensions[1] }
   end
