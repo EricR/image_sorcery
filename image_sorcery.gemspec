@@ -5,7 +5,7 @@ require 'bundler/version'
 
 Gem::Specification.new do |s|
   s.name           = "image_sorcery"
-  s.version        = "1.0.4"
+  s.version        = "1.0.5"
   s.platform       = Gem::Platform::RUBY
   s.authors        = ["Eric Rafaloff"]
   s.email          = ["hello@ericrafaloff.com"]
