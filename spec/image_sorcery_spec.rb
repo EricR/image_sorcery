@@ -8,13 +8,13 @@ describe "Image Sorcery" do
   end
   describe "getting the dimensions of an image" do
     it "returns a hash of dimensions" do
-      @image.dimensions.should == {x: "160", y: "120"}
+      @image.dimensions.should == {:x => "160", :y => "120"}
     end
   end
   describe "manipulating an image" do
     it "resizes an image" do
       original_dimensions = @image.dimensions
-      @image.manipulate!(resize: "50%")
+      @image.manipulate!(:resize => "50%")
       @image.dimensions.map {|k,v| v.to_i}.should == original_dimensions.map {|k,v| v.to_i/2}
     end
   end

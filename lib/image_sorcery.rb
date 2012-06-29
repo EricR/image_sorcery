@@ -46,8 +46,8 @@ class Sorcery
   #
   def dimensions
     dimensions = identify(:layer => 0, :format => "%wx%h").chomp.split("x")
-    { x: dimensions[0],
-      y: dimensions[1] }
+    { :x => dimensions[0],
+      :y => dimensions[1] }
   end
 
   private
