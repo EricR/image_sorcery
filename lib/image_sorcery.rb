@@ -1,4 +1,5 @@
 require 'subexec'
+require 'gm_support'
 
 class Sorcery
   def initialize(file)
@@ -53,6 +54,7 @@ class Sorcery
   private
 
   def convert_to_command(tokens)
+    tokens[0] = prefix(tokens[0]) if respond_to? :prefix
     tokens.flatten.join("")
   end
 
