@@ -21,8 +21,15 @@ image.manipulate!(scale: "50%") # => true
 image.dimensions # => { x: 250, y: 250 }
 image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 ```
+# Using GraphicsMagick
+Assuming you have GraphicsMagick installed on your box:
+
+```ruby
+image = Sorcery.gm("image.png")
+# use as normal
+```
 
 ## Todo
 
-* More unit tests
+* Some more unit tests
 * A few more convenience methods (like "dimensions").
