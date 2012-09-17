@@ -1,4 +1,3 @@
-require 'subexec'
 require 'gm_support'
 
 class Sorcery
@@ -63,8 +62,8 @@ class Sorcery
   end
 
   def run(cmds)
-    sub = Subexec.run(cmds.to_s)
-    success = sub.exitstatus == 0 ? true : false
-    [sub.output,success]
+    output = IO.popen(cmds.to_s) {|o| o.read }
+    success = $?.exitstatus == 0 ? true : false
+    [output,success]
   end
 end
