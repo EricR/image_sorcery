@@ -50,6 +50,18 @@ class Sorcery
       :y => dimensions[1] }
   end
 
+  # Runs ImageMagick's 'montage'.
+  # See http://www.imagemagick.org/script/montage.php
+  #
+  def montage(sources, args={})
+    tokens = ["montage"]
+    tokens << convert_to_arguments(args) if args
+    sources.each {|source| tokens << " '#{source}'" }
+    tokens << " '#{@file}'"
+    tokens  = convert_to_command(tokens)
+    success = run(tokens)[1]
+  end
+
   private
 
   def convert_to_command(tokens)
