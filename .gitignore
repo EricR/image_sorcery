@@ -1,3 +1,5 @@
 .DS_Store
 .gemspec
 .gem
+Gemfile.lock
+new_image.png
