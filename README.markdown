@@ -1,13 +1,13 @@
-Image Sorcery allows you to leverage all three of ImageMagick's command line tools, [mogrify](http://www.imagemagick.org/script/mogrify.php), [convert](http://www.imagemagick.org/script/convert.php), and [identify](http://www.imagemagick.org/script/identify.php), for maximum magickal power and minimum memory consumption! It lets you use GraphicsMagick if that's your thing, too.
+Image Sorcery allows you to leverage all three of ImageMagick's command line tools, [mogrify](http://www.imagemagick.org/script/mogrify.php), [convert](http://www.imagemagick.org/script/convert.php), and [identify](http://www.imagemagick.org/script/identify.php), for maximum magickal power and minimum memory consumption! It even lets you use GraphicsMagick, too, if that's your thing.
 
 ## Why?
 
-At [Fol.io](http://fol.io), we need server-side image processing to work well and bend to our will. I wrote this because the ImageMagick libraries we tried suffered from at least one of two problems:
+At [Fol.io](http://fol.io), we needed server-side image processing to work well and bend to our will. I wrote this because the ImageMagick libraries we tried suffered from at least one of two problems:
 
 * Large memory consumption/leaking
 * Didn't expose the entire ImageMagick API
 
-Due to the way Image Sorcery was written, it manages to avoid both of these problems.
+ImageSorcery doesn't try to be anything more than a wrapper that exposes the full ImageMagick and GraphicsMagick APIs. This makes it small and powerful, eliminating the above problems.
 
 ## Installation
 
