@@ -5,7 +5,7 @@ Image Sorcery allows you to leverage all three of ImageMagick's command line too
 At [Fol.io](http://fol.io), we need server-side image processing to work well and bend to our will. I wrote this because the ImageMagick libraries we tried suffered from at least one of two problems:
 
 * Large memory consumption/leaking
-* Didn't expose the entire ImageMagick library
+* Didn't expose the entire ImageMagick API
 
 Due to the way Image Sorcery was written, it manages to avoid both of these problems.
 
