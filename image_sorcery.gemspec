@@ -15,4 +15,7 @@ Gem::Specification.new do |s|
   s.files          = Dir.glob("{lib}/**/*") + %w(README.markdown)
   s.require_path   = 'lib'
   s.requirements   = "ImageMagick or GraphicsMagick"
+
+  s.add_development_dependency('rspec', '~> 2.12.0')
+  s.add_development_dependency('rake','~> 10.0.2')
 end
