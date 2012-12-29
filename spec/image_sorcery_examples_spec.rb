@@ -5,7 +5,7 @@ shared_examples_for Sorcery do
 
   describe "getting the dimensions of an image" do
     it "returns a hash of dimensions" do
-      @image.dimensions.should == {:x => "160", :y => "120"}
+      @image.dimensions.should == {:x => 160, :y => 120}
     end
   end
 
