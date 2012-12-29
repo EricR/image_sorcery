@@ -50,6 +50,18 @@ class Sorcery
       :y => dimensions[1] }
   end
 
+  # Returns the x dimension of an image as an integer
+  #
+  def width
+    dimensions()[:x].to_i
+  end
+
+  # Returns the y dimension of an image as an integer
+  #
+  def height
+    dimensions()[:y].to_i
+  end
+
   # Runs ImageMagick's 'montage'.
   # See http://www.imagemagick.org/script/montage.php
   #

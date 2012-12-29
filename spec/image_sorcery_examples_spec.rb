@@ -15,6 +15,11 @@ shared_examples_for Sorcery do
       @image.manipulate!(:resize => "50%")
       @image.dimensions.map {|k,v| v.to_i}.should == original_dimensions.map {|k,v| v.to_i/2}
     end
+
+    it "exposes width and height as integers" do
+      @image.width.should == 160
+      @image.height.should == 120
+    end
   end
 
   describe "converting an image" do
