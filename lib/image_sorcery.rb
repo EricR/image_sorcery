@@ -12,6 +12,7 @@ class Sorcery
     tokens  = ["mogrify"]
     tokens << convert_to_arguments(args) if args
     tokens << " '#{@file}#{"[#{args[:layer].to_s}]" if args[:layer]}'"
+    tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
     success
@@ -24,6 +25,7 @@ class Sorcery
     tokens  = ["convert"]
     tokens << convert_to_arguments(args) if args
     tokens << " '#{@file}#{"[#{args[:layer].to_s}]" if args[:layer]}'"
+    tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
     tokens << " #{output}"
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
@@ -82,7 +84,8 @@ class Sorcery
   end
 
   def convert_to_arguments(args)
-    args.reject {|k, v| k == :layer }.map {|k, v| " -#{k} '#{v}'"}
+    special_args = [:layer, :annotate]
+    args.reject {|k, v| special_args.include?(k) }.map {|k, v| " -#{k} '#{v}'"}
   end
 
   def run(cmds)
