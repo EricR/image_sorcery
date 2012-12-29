@@ -24,6 +24,22 @@ shared_examples_for Sorcery do |new_instance_method|
       image.width.should == 160
       image.height.should == 120
     end
+
+    describe "change of format" do
+      before :each do
+        image.manipulate!(:format => "png")
+      end
+
+      it "should delete original file" do
+        File.exists?("./spec/fixtures/dog-2.jpeg").should be_false
+      end
+
+      it "should create file with new extension" do
+        File.exists?("./spec/fixtures/dog-2.png").should be_true
+      end
+
+      its(:identify) { should include "PNG 160x120" }
+    end
   end
 
   describe "converting an image" do
