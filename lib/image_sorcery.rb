@@ -46,20 +46,20 @@ class Sorcery
   #
   def dimensions
     dimensions = identify(:layer => 0, :format => "%wx%h").chomp.split("x")
-    { :x => dimensions[0],
-      :y => dimensions[1] }
+    { :x => dimensions[0].to_i,
+      :y => dimensions[1].to_i }
   end
 
   # Returns the x dimension of an image as an integer
   #
   def width
-    dimensions()[:x].to_i
+    dimensions()[:x]
   end
 
   # Returns the y dimension of an image as an integer
   #
   def height
-    dimensions()[:y].to_i
+    dimensions()[:y]
   end
 
   # Runs ImageMagick's 'montage'.
