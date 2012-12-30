@@ -91,6 +91,10 @@ class Sorcery
     File.delete @file
     @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "." + format
     @filename_changed = true
+
+    unless File.exists? @file
+      @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "-*." + format
+    end
   end
 
   def convert_to_command(tokens)

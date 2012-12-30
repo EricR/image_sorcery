@@ -61,12 +61,22 @@ shared_examples_for Sorcery do |new_instance_method|
         end
 
         it "should create file with new extension" do
-          File.exists?("./spec/fixtures/pdf-sample-2.png").should be_true
+
+          case new_instance_method
+            when "new"
+              File.exists?("./spec/fixtures/pdf-sample-2-0.png").should be_true
+              File.exists?("./spec/fixtures/pdf-sample-2-1.png").should be_true
+            when "gm"
+              File.exists?("./spec/fixtures/pdf-sample-2.png").should be_true
+          end
         end
 
         its(:identify) { should include "PNG 595x842" }
 
         its(:filename_changed?) { should be_true }
+
+        its(:file) { should eq "./spec/fixtures/pdf-sample-2.png" } if new_instance_method == "gm"
+        its(:file) { should eq "./spec/fixtures/pdf-sample-2-*.png" } if new_instance_method == "new"
       end
     end
   end
