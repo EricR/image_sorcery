@@ -3,3 +3,4 @@
 .gem
 Gemfile.lock
 new_image.png
+spec/fixtures/dog-2.jpeg
