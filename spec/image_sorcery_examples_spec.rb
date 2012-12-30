@@ -46,11 +46,11 @@ shared_examples_for Sorcery do |new_instance_method|
     its(:file) { should eq "./spec/fixtures/dog-2.jpeg" }
 
     describe "change of format" do
-      before :each do
-        image.manipulate!(:format => "png")
-      end
-
       describe "with image" do
+        before :each do
+          image.manipulate!(:format => "png")
+        end
+
         it "should delete original file" do
           File.exists?("./spec/fixtures/dog-2.jpeg").should be_false
         end
@@ -66,33 +66,48 @@ shared_examples_for Sorcery do |new_instance_method|
         its(:file) { should eq "./spec/fixtures/dog-2.png" }
       end
 
-      describe "with multi page pdf" do
-        subject :image do
-          FileUtils.copy "./spec/fixtures/pdf-sample.pdf", "./spec/fixtures/pdf-sample-2.pdf"
-          Sorcery.send(new_instance_method, "./spec/fixtures/pdf-sample-2.pdf")
-        end
-
-        it "should delete original file" do
-          File.exists?("./spec/fixtures/pdf-sample-2.pdf").should be_false
-        end
-
-        it "should create file with new extension" do
-
-          case new_instance_method
-            when "new"
-              File.exists?("./spec/fixtures/pdf-sample-2-0.png").should be_true
-              File.exists?("./spec/fixtures/pdf-sample-2-1.png").should be_true
-            when "gm"
-              File.exists?("./spec/fixtures/pdf-sample-2.png").should be_true
+      [nil, "0,1"].each do |layer|
+        describe "with multi page pdf and :layer => '#{layer}'" do
+          before :each do
+            image.manipulate!(:format => "png", :layer => layer)
           end
+
+          subject :image do
+            FileUtils.copy "./spec/fixtures/pdf-sample.pdf", "./spec/fixtures/pdf-sample-2.pdf"
+            Sorcery.send(new_instance_method, "./spec/fixtures/pdf-sample-2.pdf")
+          end
+
+          it "should delete original file" do
+            File.exists?("./spec/fixtures/pdf-sample-2.pdf").should be_false
+          end
+
+          it "should create file with new extension" do
+
+            case new_instance_method
+              when "new"
+                File.exists?("./spec/fixtures/pdf-sample-2-0.png").should be_true
+                File.exists?("./spec/fixtures/pdf-sample-2-1.png").should be_true
+              when "gm"
+                # Inconsistent behaviour of GraphicsMagick
+                case subject.file
+                  when "./spec/fixtures/pdf-sample-2.png"   # GraphicsMagick 1.3.17 2012-10-13
+                    File.exists?("./spec/fixtures/pdf-sample-2.png").should be_true
+                  when "./spec/fixtures/pdf-sample-2.png.*" # GraphicsMagick 1.3.12 2010-03-08
+                    File.exists?("./spec/fixtures/pdf-sample-2.png.0").should be_true
+                    File.exists?("./spec/fixtures/pdf-sample-2.png.1").should be_true
+                end
+            end
+          end
+
+          its(:identify) { should include "PNG 595x842" }
+
+          its(:filename_changed?) { should be_true }
+
+          its(:file) { should eq "./spec/fixtures/pdf-sample-2-*.png" } if new_instance_method == "new"
+          # Commented out, because of inconsistent behaviour of GraphicsMagick
+          #its(:file) { should eq "./spec/fixtures/pdf-sample-2.png" } if new_instance_method == "gm"
+          #its(:file) { should eq "./spec/fixtures/pdf-sample-2.png.*" } if new_instance_method == "gm"
         end
-
-        its(:identify) { should include "PNG 595x842" }
-
-        its(:filename_changed?) { should be_true }
-
-        its(:file) { should eq "./spec/fixtures/pdf-sample-2.png" } if new_instance_method == "gm"
-        its(:file) { should eq "./spec/fixtures/pdf-sample-2-*.png" } if new_instance_method == "new"
       end
     end
   end

@@ -18,7 +18,7 @@ class Sorcery
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
     if success && args[:format]
-      replace_file args[:format].to_s.downcase
+      replace_file args[:format].to_s.downcase, args[:layer]
     end
     success
   end
@@ -87,15 +87,25 @@ class Sorcery
 
   private
 
-  def replace_file(format)
+  def replace_file(format, layer)
     return if  File.extname(@file) == format
+
+    layer ||= 0
+    layer = layer.split(",").first if layer.is_a? String
+    file_path = File.join File.dirname(@file), File.basename(@file, File.extname(@file))
+
     File.delete @file
-    @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "." + format
     @filename_changed = true
 
-    unless File.exists? @file
-      @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "-*." + format
+    possible_paths = [
+        Proc.new { |file_path, format, layer| "#{file_path}.#{format}" },
+        Proc.new { |file_path, format, layer| "#{file_path}-#{layer}.#{format}" },
+        Proc.new { |file_path, format, layer| "#{file_path}.#{format}.#{layer}" }
+    ]
+    until possible_paths.empty? || File.exists?(possible_paths.first.call(file_path, format, layer))
+      possible_paths.shift
     end
+    @file = possible_paths.first.call(file_path, format, "*") unless possible_paths.empty?
   end
 
   def convert_to_command(tokens)

@@ -6,3 +6,4 @@ new_image.png
 spec/fixtures/dog-2.jpeg
 spec/fixtures/dog-2.png
 spec/fixtures/pdf-sample-2*.png
+spec/fixtures/pdf-sample-2.png.*
