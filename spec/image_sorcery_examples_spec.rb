@@ -7,6 +7,22 @@ shared_examples_for Sorcery do |new_instance_method|
     Sorcery.send(new_instance_method, "./spec/fixtures/dog-2.jpeg") # Who doesn't love dogs?
   end
 
+  after :each do
+    [
+        "new_image.png",
+        "./spec/fixtures/dog-2.jpeg",
+        "./spec/fixtures/dog-2.png",
+        "./spec/fixtures/pdf-sample-2.pdf",
+        "./spec/fixtures/pdf-sample-2.png",
+        "./spec/fixtures/pdf-sample-2-0.png",
+        "./spec/fixtures/pdf-sample-2-1.png",
+        "./spec/fixtures/pdf-sample-2.png.0",
+        "./spec/fixtures/pdf-sample-2.png.1"
+    ].each do |file|
+      File.exists?(file) && File.delete(file)
+    end
+  end
+
   describe "getting the dimensions of an image" do
     it "returns a hash of dimensions" do
       image.dimensions.should == {:x => 160, :y => 120}
