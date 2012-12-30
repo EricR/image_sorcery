@@ -15,6 +15,9 @@ class Sorcery
     tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
+    if success && args[:format]
+      replace_file args[:format].to_s.downcase
+    end
     success
   end
 
@@ -77,6 +80,11 @@ class Sorcery
   end
 
   private
+
+  def replace_file(format)
+    File.delete @file
+    @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "." + format
+  end
 
   def convert_to_command(tokens)
     tokens[0] = prefix(tokens[0]) if respond_to? :prefix
