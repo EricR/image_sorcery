@@ -88,6 +88,7 @@ class Sorcery
   private
 
   def replace_file(format)
+    return if  File.extname(@file) == format
     File.delete @file
     @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "." + format
     @filename_changed = true
