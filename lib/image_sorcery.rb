@@ -1,6 +1,8 @@
 require 'gm_support'
 
 class Sorcery
+  attr_reader :file
+
   def initialize(file)
     @file = file
   end
@@ -79,11 +81,16 @@ class Sorcery
     success = run(tokens)[1]
   end
 
+  def filename_changed?
+    (@filename_changed)
+  end
+
   private
 
   def replace_file(format)
     File.delete @file
     @file = File.join File.dirname(@file), File.basename(@file, File.extname(@file)) + "." + format
+    @filename_changed = true
   end
 
   def convert_to_command(tokens)

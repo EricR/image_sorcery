@@ -25,6 +25,10 @@ shared_examples_for Sorcery do |new_instance_method|
       image.height.should == 120
     end
 
+    its(:filename_changed?) { should be_false }
+
+    its(:file) { should eq "./spec/fixtures/dog-2.jpeg" }
+
     describe "change of format" do
       before :each do
         image.manipulate!(:format => "png")
@@ -40,6 +44,10 @@ shared_examples_for Sorcery do |new_instance_method|
         end
 
         its(:identify) { should include "PNG 160x120" }
+
+        its(:filename_changed?) { should be_true }
+
+        its(:file) { should eq "./spec/fixtures/dog-2.png" }
       end
 
       describe "with multi page pdf" do
@@ -57,6 +65,8 @@ shared_examples_for Sorcery do |new_instance_method|
         end
 
         its(:identify) { should include "PNG 595x842" }
+
+        its(:filename_changed?) { should be_true }
       end
     end
   end
