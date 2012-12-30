@@ -30,15 +30,18 @@ shared_examples_for Sorcery do |new_instance_method|
         image.manipulate!(:format => "png")
       end
 
-      it "should delete original file" do
-        File.exists?("./spec/fixtures/dog-2.jpeg").should be_false
+      describe "with image" do
+        it "should delete original file" do
+          File.exists?("./spec/fixtures/dog-2.jpeg").should be_false
+        end
+
+        it "should create file with new extension" do
+          File.exists?("./spec/fixtures/dog-2.png").should be_true
+        end
+
+        its(:identify) { should include "PNG 160x120" }
       end
 
-      it "should create file with new extension" do
-        File.exists?("./spec/fixtures/dog-2.png").should be_true
-      end
-
-      its(:identify) { should include "PNG 160x120" }
     end
   end
 
