@@ -42,6 +42,22 @@ shared_examples_for Sorcery do |new_instance_method|
         its(:identify) { should include "PNG 160x120" }
       end
 
+      describe "with multi page pdf" do
+        subject :image do
+          FileUtils.copy "./spec/fixtures/pdf-sample.pdf", "./spec/fixtures/pdf-sample-2.pdf"
+          Sorcery.send(new_instance_method, "./spec/fixtures/pdf-sample-2.pdf")
+        end
+
+        it "should delete original file" do
+          File.exists?("./spec/fixtures/pdf-sample-2.pdf").should be_false
+        end
+
+        it "should create file with new extension" do
+          File.exists?("./spec/fixtures/pdf-sample-2.png").should be_true
+        end
+
+        its(:identify) { should include "PNG 595x842" }
+      end
     end
   end
 
