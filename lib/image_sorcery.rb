@@ -87,25 +87,33 @@ class Sorcery
 
   private
 
+  # Replaces the old file (with the old file format) with the newly generated one.
+  # The old file will be deleted and $file will be reset.
+  # If ImageMagick generated more than one file, $file will have a "*", so that all files generated
+  # will be manipulated in the following steps.
   def replace_file(format, layer)
     return if  File.extname(@file) == format
 
     layer ||= 0
     layer = layer.split(",").first if layer.is_a? String
-    file_path = File.join File.dirname(@file), File.basename(@file, File.extname(@file))
 
     File.delete @file
     @filename_changed = true
 
+    path = File.join File.dirname(@file), File.basename(@file, File.extname(@file))
+    new_file = find_file path, format, layer
+
+    @file = new_file.call(path, format, "*") unless new_file.nil?
+  end
+
+  def find_file(path, format, layer)
     possible_paths = [
-        Proc.new { |file_path, format, layer| "#{file_path}.#{format}" },
-        Proc.new { |file_path, format, layer| "#{file_path}-#{layer}.#{format}" },
-        Proc.new { |file_path, format, layer| "#{file_path}.#{format}.#{layer}" }
+        Proc.new { |path, format, layer| "#{path}.#{format}" },
+        Proc.new { |path, format, layer| "#{path}-#{layer}.#{format}" },
+        Proc.new { |path, format, layer| "#{path}.#{format}.#{layer}" }
     ]
-    until possible_paths.empty? || File.exists?(possible_paths.first.call(file_path, format, layer))
-      possible_paths.shift
-    end
-    @file = possible_paths.first.call(file_path, format, "*") unless possible_paths.empty?
+
+    possible_paths.find { |possible_path| File.exists?(possible_path.call(path, format, layer)) }
   end
 
   def convert_to_command(tokens)
