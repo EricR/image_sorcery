@@ -17,9 +17,7 @@ class Sorcery
     tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
-    if success && args[:format]
-      replace_file args[:format].to_s.downcase, args[:layer]
-    end
+    replace_file(args[:format].to_s.downcase, args[:layer]) if success && args[:format]
     success
   end
 
