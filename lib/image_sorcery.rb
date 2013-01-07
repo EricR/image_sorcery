@@ -1,6 +1,8 @@
 require 'gm_support'
 
 class Sorcery
+  attr_reader :file
+
   def initialize(file)
     @file = file
   end
@@ -15,6 +17,7 @@ class Sorcery
     tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
     tokens  = convert_to_command(tokens)
     success = run(tokens)[1]
+    replace_file(args[:format].to_s.downcase, args[:layer]) if success && args[:format]
     success
   end
 
@@ -76,7 +79,40 @@ class Sorcery
     success = run(tokens)[1]
   end
 
+  def filename_changed?
+    (@filename_changed)
+  end
+
   private
+
+  # Replaces the old file (with the old file format) with the newly generated one.
+  # The old file will be deleted and $file will be reset.
+  # If ImageMagick generated more than one file, $file will have a "*", so that all files generated
+  # will be manipulated in the following steps.
+  def replace_file(format, layer)
+    return if  File.extname(@file) == format
+
+    layer ||= 0
+    layer = layer.split(",").first if layer.is_a? String
+
+    File.delete @file
+    @filename_changed = true
+
+    path = File.join File.dirname(@file), File.basename(@file, File.extname(@file))
+    new_file = find_file path, format, layer
+
+    @file = new_file.call(path, format, "*") unless new_file.nil?
+  end
+
+  def find_file(path, format, layer)
+    possible_paths = [
+        Proc.new { |path, format, layer| "#{path}.#{format}" },
+        Proc.new { |path, format, layer| "#{path}-#{layer}.#{format}" },
+        Proc.new { |path, format, layer| "#{path}.#{format}.#{layer}" }
+    ]
+
+    possible_paths.find { |possible_path| File.exists?(possible_path.call(path, format, layer)) }
+  end
 
   def convert_to_command(tokens)
     tokens[0] = prefix(tokens[0]) if respond_to? :prefix
