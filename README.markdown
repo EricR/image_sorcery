@@ -21,6 +21,27 @@ image.manipulate!(scale: "50%") # => true
 image.dimensions # => { x: 250, y: 250 }
 image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 ```
+
+```ruby
+image = Sorcery.new("multi-page.pdf")
+image.filename_changed? # => false
+image.manipulate!(format: "png", layer: 0) # => true
+image.filename_changed? # => true
+image.file # => "multi-page.png"
+```
+
+```ruby
+image = Sorcery.new("multi-page.pdf")
+image.manipulate!(format: "png") # => true
+image.filename_changed? # => true
+
+# on ImageMagick it returns all layers as a single file
+image.file # => "multi-page-*.png"
+
+# on GrapicksMagick it returns only the fist layer
+image.file # => "multi-page.png"
+```
+
 # Using GraphicsMagick
 Assuming you have GraphicsMagick installed on your box:
 

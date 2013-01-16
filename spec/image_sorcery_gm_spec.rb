@@ -7,5 +7,5 @@ describe "Image Sorcery with GraphicsMagick" do
     @image = ImageSorcery.gm("./spec/fixtures/dog-2.jpeg") # Who doesn't love dogs?
   end
 
-  it_behaves_like ImageSorcery
+  it_behaves_like ImageSorcery, "gm"
 end
