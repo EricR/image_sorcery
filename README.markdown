@@ -1,6 +1,6 @@
 Image Sorcery allows you to leverage all three of ImageMagick's command line tools, [mogrify](http://www.imagemagick.org/script/mogrify.php), [convert](http://www.imagemagick.org/script/convert.php), and [identify](http://www.imagemagick.org/script/identify.php), for maximum magickal power and minimum memory consumption! It even lets you use GraphicsMagick, too, if that's your thing.
 
-[![Build Status](https://travis-ci.org/EricR/image_sorcery.png?branch=master)](undefined)
+![Build Status](https://travis-ci.org/EricR/image_sorcery.png?branch=master)
 
 ## Why?
 
