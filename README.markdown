@@ -23,7 +23,7 @@ image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 ```
 
 ```ruby
-image = Sorcery.new("multi-page.pdf")
+image = ImageSorcery.new("multi-page.pdf")
 image.filename_changed? # => false
 image.manipulate!(format: "png", layer: 0) # => true
 image.filename_changed? # => true
@@ -31,7 +31,7 @@ image.file # => "multi-page.png"
 ```
 
 ```ruby
-image = Sorcery.new("multi-page.pdf")
+image = ImageSorcery.new("multi-page.pdf")
 image.manipulate!(format: "png") # => true
 image.filename_changed? # => true
 
