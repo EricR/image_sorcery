@@ -15,7 +15,7 @@ ImageSorcery doesn't try to be anything more than a wrapper that exposes the ful
 
 ## Code Examples
 ```ruby
-image = Sorcery.new("image.png")
+image = ImageSorcery.new("image.png")
 image.identify # => "image.png PNG 500x500 500x500+0+0 8-bit DirectClass 236KB 0.010u 0:00.010\n"
 image.manipulate!(scale: "50%") # => true
 image.dimensions # => { x: 250, y: 250 }
@@ -25,7 +25,7 @@ image.convert("thumbnail.jpg", quality: 80, crop: "100x100>") # => true
 Assuming you have GraphicsMagick installed on your box:
 
 ```ruby
-image = Sorcery.gm("image.png")
+image = ImageSorcery.gm("image.png")
 # use as normal
 ```
 

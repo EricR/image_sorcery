@@ -4,7 +4,7 @@ module GmSupport
   end
 end
 
-class Sorcery
+class ImageSorcery
   class << self
     def gm file
       instance = new(file)

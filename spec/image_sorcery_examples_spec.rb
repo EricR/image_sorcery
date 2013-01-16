@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'image_sorcery'
 
-shared_examples_for Sorcery do
+shared_examples_for ImageSorcery do
 
   describe "getting the dimensions of an image" do
     it "returns a hash of dimensions" do
