@@ -21,6 +21,19 @@ class ImageSorcery
     success
   end
 
+  # Runs ImageMagick's 'composite'.
+  # See http://www.imagemagick.org/script/composite.php
+  #
+  def composite!(output, args={})
+    tokens  = ["composite"]
+    tokens << convert_to_arguments(args) if args
+    tokens << " '#{@file}#{"[#{args[:layer].to_s}]" if args[:layer]}'"
+    tokens << " -annotate #{args[:annotate].to_s}" if args[:annotate]
+    tokens  = convert_to_command(tokens)
+    success = run(tokens)[1]
+    success
+  end
+
   # Runs ImageMagick's 'convert'.
   # See http://www.imagemagick.org/script/convert.php
   #
